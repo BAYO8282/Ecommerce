@@ -87,7 +87,10 @@ public class RegistrationActivity extends AppCompatActivity {
                 .document(username)
                 .set(newUser)
                 .addOnSuccessListener(aVoid -> {
-                    SharedPref.getInstance(this).saveData(AppConstants.LOG, AppConstants.LOG);
+                    SharedPref sharedPref = SharedPref.getInstance(this);
+                    sharedPref.saveData(AppConstants.LOG, AppConstants.LOG);
+                    sharedPref.saveData(AppConstants.NAME, name);
+                    sharedPref.saveData(AppConstants.PHONE, phone);
                     startActivity(new Intent(this, MainActivity.class));
                     finishAffinity();
                 })
