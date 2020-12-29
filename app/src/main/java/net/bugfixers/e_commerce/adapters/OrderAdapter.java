@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,12 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import net.bugfixers.e_commerce.R;
 import net.bugfixers.e_commerce.models.Order;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
 
-    private Context context;
-    private ArrayList<Order> orders;
+    private final Context context;
+    private final ArrayList<Order> orders;
 
     public OrderAdapter(Context context, ArrayList<Order> orders) {
         this.context = context;
@@ -31,7 +35,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        Order order = orders.get(position);
+        holder.textOrderId.setText(order.getOrderId());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a", Locale.getDefault());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(order.getTime());
+        holder.textTime.setText(formatter.format(calendar.getTime()));
+        holder.textAddress.setText(String.format("%s, %s, %s", order.getAddress(), order.getCity(), order.getZipCode()));
     }
 
     @Override
@@ -39,10 +49,18 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         return orders.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        private final TextView textOrderId;
+        private final TextView textTime;
+        private final TextView textAddress;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            textOrderId = itemView.findViewById(R.id.order_id);
+            textTime = itemView.findViewById(R.id.time);
+            textAddress = itemView.findViewById(R.id.address);
         }
     }
 }

@@ -38,8 +38,7 @@
             android:textColor="@color/black"
             android:textSize="12dp"
             android:textStyle="bold"
-            android:ellipsize="end"
-            android:maxLines="1"
+            android:singleLine="true"
             app:layout_constraintStart_toEndOf="@id/image_product"
             app:layout_constraintEnd_toStartOf="@id/cart_amount"
             app:layout_constraintBottom_toTopOf="@id/text_product_price" />

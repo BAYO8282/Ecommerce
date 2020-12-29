@@ -3,13 +3,21 @@ package net.bugfixers.e_commerce.models;
 public class Order {
 
     private String orderId;
-    private String time;
+    private long time;
     private String address;
     private String city;
     private String zipCode;
 
     public Order() {
 
+    }
+
+    public Order(String orderId, long time, String address, String city, String zipCode) {
+        this.orderId = orderId;
+        this.time = time;
+        this.address = address;
+        this.city = city;
+        this.zipCode = zipCode;
     }
 
     public String getOrderId() {
@@ -20,11 +28,11 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public String getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(long time) {
         this.time = time;
     }
 
