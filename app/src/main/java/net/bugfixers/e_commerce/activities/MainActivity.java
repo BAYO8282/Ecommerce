@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 
 import com.github.ybq.android.spinkit.SpinKitView;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private MainAdapter adapter;
 
     private ConstraintLayout profileLayout;
-    private ConstraintLayout ordersLayout;
+    private HorizontalScrollView ordersLayout;
     private SharedPref sharedPref;
 
     private SpinKitView spin;
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 ordersLayout.setVisibility(View.GONE);
                 drawer.setVisibility(View.VISIBLE);
                 profileLayout.setVisibility(View.GONE);
-                changeCategory("Favorite");
+                changeCategory("Favorites");
             } else if (item.getItemId() == R.id.orders) {
                 ordersLayout.setVisibility(View.VISIBLE);
                 profileLayout.setVisibility(View.GONE);

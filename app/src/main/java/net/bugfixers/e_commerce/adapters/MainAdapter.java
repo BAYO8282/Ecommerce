@@ -42,9 +42,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
         if (category.equals("All Products")) {
             holder.itemView.setVisibility(View.VISIBLE);
-        }else if(category.equals("Favorite") && product.isFavorite()) {
+        }else if(category.equals("Favorites") && product.isFavorite()) {
             holder.itemView.setVisibility(View.VISIBLE);
-        } else if (category.equals(product.getCategory())){
+        } else if (category.equals(product.getCategory())) {
             holder.itemView.setVisibility(View.VISIBLE);
         } else {
             holder.itemView.setVisibility(View.GONE);

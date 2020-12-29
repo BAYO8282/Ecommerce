@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ECommerce"
         tools:replace="android:theme">
-        <activity android:name=".activities.CheckoutActivity"></activity>
+        <activity android:name=".activities.CheckoutActivity"
+            android:label="Checkout" />
         <activity
             android:name=".activities.RegistrationActivity"
             android:theme="@style/Theme.ECommerce.orange" />
