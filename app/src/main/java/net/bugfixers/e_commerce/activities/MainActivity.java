@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     private NavigationView navigationView;
 
-    private ArrayList<Product> products;
+    public ArrayList<Product> products;
     private RecyclerView mainRecycler;
     private MainAdapter adapter;
 
@@ -80,11 +80,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(new Intent(this, LoginActivity.class));
             finishAffinity();
         });
-        checkout.setOnClickListener(v ->
-                startActivity(new Intent(this, CheckoutActivity.class)
-
-                )
-
+        checkout.setOnClickListener(v -> {
+            ArrayList<Product> orders = new ArrayList<>();
+            for (Product product: products) {
+                if (product.getAmount() > 0) orders.add(product);
+            }
+            startActivity(new Intent(this, CheckoutActivity.class)
+                    .putParcelableArrayListExtra("products", orders)
+                );
+            }
         );
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation);
@@ -120,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         products = new ArrayList<>();
 
-        adapter = new MainAdapter(this, products, "All Products");
+        adapter = new MainAdapter(this, "All Products");
         mainRecycler = findViewById(R.id.recyclerview_main);
         mainRecycler.setLayoutManager(new GridLayoutManager(this, 2));
         mainRecycler.setAdapter(adapter);
@@ -165,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void changeCategory(String category) {
         textAll.setText(category);
-        adapter = new MainAdapter(this, products, category);
+        adapter = new MainAdapter(this, category);
         mainRecycler.setAdapter(adapter);
     }
     @Override

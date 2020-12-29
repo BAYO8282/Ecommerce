@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import net.bugfixers.e_commerce.R;
+import net.bugfixers.e_commerce.activities.MainActivity;
 import net.bugfixers.e_commerce.models.Product;
 
 import java.util.ArrayList;
@@ -22,12 +23,10 @@ import java.util.Locale;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     private final Context context;
-    private final ArrayList<Product> list;
     private final String category;
 
-    public MainAdapter(Context context, ArrayList<Product> list, String category) {
+    public MainAdapter(Context context, String category) {
         this.context = context;
-        this.list = list;
         this.category = category;
     }
 
@@ -39,7 +38,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Product product = list.get(position);
+        Product product = ((MainActivity)context).products.get(position);
 
         if (category.equals("All Products")) {
             holder.itemView.setVisibility(View.VISIBLE);
@@ -52,7 +51,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         }
         holder.productName.setText(product.getName());
         holder.productPrice.setText(String.format(Locale.getDefault(),"Price: %d Taka", product.getPrice()));
-        Glide.with(context).load(list.get(position).getImage()).placeholder(R.drawable.ic_profile_large)
+        Glide.with(context).load(product.getImage()).placeholder(R.drawable.ic_profile_large)
                 .error(R.drawable.ic_profile_large).into(holder.productImage);
 
         holder.plus.setOnClickListener(v -> {
@@ -92,7 +91,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return ((MainActivity)context).products.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
