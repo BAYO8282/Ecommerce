@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">E-Commerce</string>
+    <string name="menu">Menu</string>
+    <string name="favorites">Favorites</string>
+    <string name="orders">Orders</string>
+    <string name="profile">Profile</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+</resources>
