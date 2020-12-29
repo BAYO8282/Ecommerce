@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageView edit;
     private boolean editMode;
     private String category;
+    private boolean dataAvailable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -257,20 +258,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void getProducts() {
-        FirebaseFirestore.getInstance().collection("product")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Log.d(TAG, document.getId() + " => " + document.getData());
-                            products.add(document.toObject(Product.class));
+        if (!dataAvailable) {
+            FirebaseFirestore.getInstance().collection("product")
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                products.add(document.toObject(Product.class));
+                            }
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
-                        adapter.notifyDataSetChanged();
-                    } else {
-                        Log.d(TAG, "Error getting documents: ", task.getException());
-                    }
-                    spin.setVisibility(View.GONE);
-                });
+                        spin.setVisibility(View.GONE);
+                    });
+        }
     }
 
     private void changeCategory() {
@@ -314,6 +317,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         products = savedInstanceState.getParcelableArrayList("products");
+        if (products.size() > 0) dataAvailable = true;
     }
 
     private void showSnack(String s) {
