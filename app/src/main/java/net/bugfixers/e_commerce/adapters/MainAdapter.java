@@ -59,13 +59,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             holder.count.setText(String.valueOf(product.getAmount()));
         });
         holder.minus.setOnClickListener(v -> {
-            if (product.getAmount() == 1) {
+            product.setAmount(product.getAmount() - 1);
+            holder.count.setText(String.valueOf(product.getAmount()));
+            if (product.getAmount() == 0) {
                 holder.addToCart.setVisibility(View.VISIBLE);
                 holder.cartAmount.setVisibility(View.GONE);
-            } else {
-                product.setAmount(product.getAmount() - 1);
             }
-            holder.count.setText(String.valueOf(product.getAmount()));
         });
 
         if (product.getAmount() > 0) {
