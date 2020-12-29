@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Group;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -73,7 +74,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageView edit;
     private boolean editMode;
     private String category;
-    private boolean dataAvailable;
+
+    private TextView textNoOder;
+    private Group groupOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +155,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         });
 
+        textNoOder = findViewById(R.id.no_order);
+        groupOrder = findViewById(R.id.group_order);
         layoutAddress = findViewById(R.id.layout_address);
         layoutCity = findViewById(R.id.layout_city);
         layoutZipCode = findViewById(R.id.layout_zip);
@@ -210,6 +215,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void getOrders() {
         FirebaseFirestore.getInstance().collection("orders")
+                .whereEqualTo("username", sharedPref.getData(AppConstants.NAME))
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -218,9 +224,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             Log.d(TAG, document.getId() + " => " + document.getData());
                             orders.add(new Order(document.getId(), document.getLong("time"), document.getString("address"), document.getString("city"), document.getString("zipCode")));
                         }
-                        RecyclerView recyclerView = findViewById(R.id.order_recycler);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                        recyclerView.setAdapter(new OrderAdapter(this, orders));
+                        if (orders.size() > 0) {
+                            textNoOder.setVisibility(View.GONE);
+                            groupOrder.setVisibility(View.VISIBLE);
+                            RecyclerView recyclerView = findViewById(R.id.order_recycler);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                            recyclerView.setAdapter(new OrderAdapter(this, orders));
+                        } else {
+                            groupOrder.setVisibility(View.GONE);
+                            textNoOder.setVisibility(View.VISIBLE);
+                        }
                     } else {
                         Log.d(TAG, "Error getting documents: ", task.getException());
                     }
@@ -258,22 +271,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void getProducts() {
-        if (!dataAvailable) {
-            FirebaseFirestore.getInstance().collection("product")
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                products.add(document.toObject(Product.class));
-                            }
-                            adapter.notifyDataSetChanged();
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+        products.clear();
+        FirebaseFirestore.getInstance().collection("product")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d(TAG, document.getId() + " => " + document.getData());
+                            products.add(document.toObject(Product.class));
                         }
-                        spin.setVisibility(View.GONE);
-                    });
-        }
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
+                    }
+                    spin.setVisibility(View.GONE);
+                });
     }
 
     private void changeCategory() {
@@ -317,7 +329,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         products = savedInstanceState.getParcelableArrayList("products");
-        if (products.size() > 0) dataAvailable = true;
     }
 
     private void showSnack(String s) {

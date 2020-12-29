@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import net.bugfixers.e_commerce.R;
+import net.bugfixers.e_commerce.activities.CheckoutActivity;
 import net.bugfixers.e_commerce.models.Product;
 
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.ViewHo
         holder.minus.setOnClickListener(v -> {
             if (product.getAmount() == 1) {
                 list.remove(position);
+                notifyDataSetChanged();
             } else {
                 product.setAmount(product.getAmount() - 1);
                 holder.productPrice.setText(String.format(Locale.getDefault(),"%d x %d = %d Taka", product.getPrice(), product.getAmount(), product.getPrice()*product.getAmount()));
@@ -62,7 +64,12 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (list.size() > 0) {
+            return list.size();
+        } else {
+            ((CheckoutActivity) context).finish();
+            return 0;
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

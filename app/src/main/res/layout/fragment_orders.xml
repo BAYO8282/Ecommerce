@@ -7,6 +7,7 @@
 
     <TextView
         android:visibility="gone"
+        android:id="@+id/no_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
@@ -25,6 +26,7 @@
         android:textStyle="bold"
         android:textSize="18sp"
         android:text="Orders"
+        android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/header" />
@@ -85,5 +87,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="title, header, order_recycler" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
