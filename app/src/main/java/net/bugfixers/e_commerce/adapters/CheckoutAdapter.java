@@ -41,8 +41,7 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.ViewHo
 
         holder.productName.setText(product.getName());
         holder.productPrice.setText(String.format(Locale.getDefault(),"%d x %d = %d Taka", product.getPrice(), product.getAmount(), product.getPrice()*product.getAmount()));
-        Glide.with(context).load(list.get(position).getImage()).placeholder(R.drawable.ic_profile_large)
-                .error(R.drawable.ic_profile_large).into(holder.productImage);
+        Glide.with(context).load(list.get(position).getImage()).placeholder(R.drawable.ic_blank_image).error(R.drawable.ic_blank_image).into(holder.productImage);
 
         holder.count.setText(String.valueOf(product.getAmount()));
         holder.plus.setOnClickListener(v -> {

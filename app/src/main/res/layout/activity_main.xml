@@ -60,7 +60,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:drawablePadding="8dp"
-                app:drawableStartCompat="@drawable/ic_orders" />
+                app:drawableStartCompat="@drawable/ic_cart" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_main"

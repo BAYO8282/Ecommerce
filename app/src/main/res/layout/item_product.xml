@@ -47,7 +47,7 @@
             android:layout_height="48dp"
             android:layout_margin="8dp"
             android:padding="8dp"
-            android:src="@drawable/ic_orders"
+            android:src="@drawable/ic_cart"
             android:contentDescription="@string/app_name"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

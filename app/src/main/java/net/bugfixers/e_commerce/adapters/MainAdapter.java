@@ -52,8 +52,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         }
         holder.productName.setText(product.getName());
         holder.productPrice.setText(String.format(Locale.getDefault(),"Price: %d Taka", product.getPrice()));
-        Glide.with(context).load(product.getImage()).placeholder(R.drawable.ic_profile_large)
-                .error(R.drawable.ic_profile_large).into(holder.productImage);
+        Glide.with(context).load(product.getImage()).placeholder(R.drawable.ic_blank_image).error(R.drawable.ic_blank_image).into(holder.productImage);
 
         holder.plus.setOnClickListener(v -> {
             product.setAmount(product.getAmount() + 1);
@@ -93,6 +92,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 .putExtra("productName", product.getName())
                 .putExtra("productPrice", product.getPrice())
                 .putExtra("productDetails", product.getDetails())
+                .putExtra("isFavorite", product.isFavorite())
         ));
     }
 
