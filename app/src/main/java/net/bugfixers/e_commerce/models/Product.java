@@ -11,6 +11,7 @@ public class Product implements Parcelable {
     private String image;
     private int amount;
     private boolean favorite;
+    private String details;
 
     public Product() {
 
@@ -64,9 +65,17 @@ public class Product implements Parcelable {
         this.favorite = favorite;
     }
 
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
     // Parcelling part
     public Product(Parcel in){
-        String[] data = new String[5];
+        String[] data = new String[6];
 
         in.readStringArray(data);
         this.name = data[0];
@@ -74,6 +83,7 @@ public class Product implements Parcelable {
         this.category = data[2];
         this.image = data[3];
         this.amount = Integer.parseInt(data[4]);
+        this.details = data[5];
     }
 
     @Override
@@ -88,7 +98,8 @@ public class Product implements Parcelable {
                 String.valueOf(this.price),
                 this.category,
                 this.image,
-                String.valueOf(this.amount)
+                String.valueOf(this.amount),
+                this.details
         });
     }
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {

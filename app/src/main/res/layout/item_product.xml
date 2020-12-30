@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="0"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textColor="@color/white" />
 
             <ImageView
@@ -102,7 +102,7 @@
             android:gravity="center"
             android:text="Name"
             android:textColor="@color/black"
-            android:textSize="12dp"
+            android:textSize="12sp"
             android:textStyle="bold"
             android:singleLine="true"
             app:layout_constraintStart_toStartOf="parent"
@@ -117,7 +117,7 @@
             android:layout_marginBottom="8dp"
             android:text="Price"
             android:textColor="@color/black"
-            android:textSize="12dp"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />

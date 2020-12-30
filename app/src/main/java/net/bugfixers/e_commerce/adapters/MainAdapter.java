@@ -1,6 +1,7 @@
 package net.bugfixers.e_commerce.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,9 @@ import com.bumptech.glide.Glide;
 
 import net.bugfixers.e_commerce.R;
 import net.bugfixers.e_commerce.activities.MainActivity;
+import net.bugfixers.e_commerce.activities.ProductDetailsActivity;
 import net.bugfixers.e_commerce.models.Product;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
@@ -86,6 +87,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         });
 
         holder.favorite.setImageResource(product.isFavorite()?R.drawable.ic_favorites:R.drawable.ic_favorites_border);
+
+        holder.itemView.setOnClickListener(v -> context.startActivity(new Intent(context, ProductDetailsActivity.class)
+                .putExtra("productImage", product.getImage())
+                .putExtra("productName", product.getName())
+                .putExtra("productPrice", product.getPrice())
+                .putExtra("productDetails", product.getDetails())
+        ));
     }
 
     @Override
